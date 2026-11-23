@@ -4,7 +4,7 @@
 int main() {
     std::string nama_barang, kode_barang, jumlah_barang, harga_barang;
 
-    std::cout << " === Input Data Barang ===\n\n";
+    std::cout << " ============================ Input Data Barang =========================\n\n";
 
     std::cout << "Masukkan nama barang: ";
     std::getline(std::cin, nama_barang);
@@ -29,5 +29,13 @@ int main() {
     out.close();
     
     std::cout << "\nData berhasil ditambahkan ke 'barang.txt'.\n";
-    return 0;
+    
+    //apakah user ingin menambahkan data lagi
+    char choice;
+    std::cout << "Apakah Anda ingin menambahkan data lagi? (y/n): ";
+    std::cin >> choice;
+    std::cin.ignore(); // membersihkan buffer
+    if (choice == 'y' || choice == 'Y') {
+        main(); // memanggil fungsi main() untuk menambahkan data lagi
+    }
 }
