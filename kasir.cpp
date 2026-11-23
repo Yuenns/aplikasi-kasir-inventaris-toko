@@ -16,6 +16,12 @@ int main() {
         cerr << "Pastikan file 'barang.txt' sudah ada dan dapat diakses.\n";
         return 1;
     }
+    struct Barang {
+        string nama_barang;
+        string kode_barang;
+        int jumlah_barang;
+        int harga_barang;
+    };
 
     //Daftar menu, harga, dan stok
     cout << "========================================================================" << endl;
@@ -45,6 +51,23 @@ int main() {
         return 0; // loop program jika jumlah pesanan kurang dari atau sama dengan 0
     }
 
+    ifstream file("barang.txt");
+    bool found = false;
+    while (std::getline(file, nama_barang) && std::getline(file, kode_barang) && std::getline(file, jumlah_barang) && std::getline(file, harga_barang)) {
+        if (kode == kode_barang) {
+            found = true;
+            break;
+        }
+    }
+    file.close();
+
+    if (!found) {
+        cout << "Barang tidak ada / kode barang tidak valid!" << endl;
+        return 0;
+    }
+
+    void *ptr = &harga_barang; // pointer ke harga_barang
+
     // menghitung total belanja
     total = std::stoi(harga_barang) * jumlah;
     cout << "Total belanja: Rp. " << total << endl;
@@ -67,7 +90,9 @@ int main() {
     cout << "                          STRUK PEMBAYARAN                             " << endl;
     cout << "======================================================================" << endl;
     cout << "Nama pembeli : " << pembeli << endl;
+    cout << "Nama barang  : " << nama_barang << endl;
     cout << "Kode barang  : " << kode << endl;
+    cout << "Harga        : Rp. " << harga_barang << endl;
     cout << "Jumlah       : " << jumlah << endl;
     cout << "Total        : Rp. " << total << endl;
     cout << "Uang bayar   : Rp. " << jumbayar << endl;
