@@ -16,12 +16,6 @@ int main() {
         cerr << "Pastikan file 'barang.txt' sudah ada dan dapat diakses.\n";
         return 1;
     }
-    struct Barang {
-        string nama_barang;
-        string kode_barang;
-        int jumlah_barang;
-        int harga_barang;
-    };
 
     //Daftar menu, harga, dan stok
     cout << "========================================================================" << endl;
@@ -49,6 +43,10 @@ int main() {
     if (jumlah <= 0 || jumlah > 20) {
         cout << "Jumlah pesanan tidak valid" << endl;
         return 0; // loop program jika jumlah pesanan kurang dari atau sama dengan 0
+    }
+    if (jumlah > std::stoi(jumlah_barang)) {
+        cout << "Stok barang tidak mencukupi" << endl;
+        return 0; // loop program jika jumlah pesanan lebih dari stok barang
     }
 
     ifstream file("barang.txt");
