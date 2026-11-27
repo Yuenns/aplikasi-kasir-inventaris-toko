@@ -2,54 +2,48 @@
 #include <string>
 #include <fstream>
 
-using namespace std;
-
 int main() {
-    char nama[100], pembeli[100];
-    int harga , stok, jumlah, total, jumtotal, jumbayar, kembalian;
-    string input, kode;
+    std::string pembeli;
+    std::string input, kode;
 
     //inventaris
-    ifstream in("barang.txt");
+    std::ifstream in("barang.txt");
     if (!in) {
-        cerr << "\n[error] Gagal membuka file 'barang.txt'!\n";
-        cerr << "Pastikan file 'barang.txt' sudah ada dan dapat diakses.\n";
+        std::cerr << "\n[error] Gagal membuka file 'barang.txt'!\n";
+        std::cerr << "Pastikan file 'barang.txt' sudah ada dan dapat diakses.\n";
         return 1;
     }
 
     //Daftar menu, harga, dan stok
-    cout << "========================================================================" << endl;
-    cout << "                          UMSAMART                                        " << endl;
-    cout << "========================================================================" << endl;
-    cout << "Nama pembeli: ";
-    cin >> pembeli;
+    std::cout << "========================================================================" << std::endl;
+    std::cout << "                          UMSAMART                                        " << std::endl;
+    std::cout << "========================================================================" << std::endl;
+    std::cout << "Nama pembeli: ";
     
     std::string nama_barang, kode_barang, jumlah_barang,harga_barang;
-    cout << "Daftar Menu:\n";
+    std::cout << "Daftar Menu:\n";
     while (std::getline(in, nama_barang) && std::getline(in, kode_barang) && std::getline(in, jumlah_barang) && std::getline(in, harga_barang)) {
-        cout << "Nama_Barang: " << nama_barang << '\n';
-        cout << "Kode_Barang: " << kode_barang << '\n';
-        cout << "Jumlah_Barang: " << jumlah_barang << "\n\n";
-        cout << "Harga_Barang: " << harga_barang << "\n\n";
+        std::cout << "Nama_Barang: " << nama_barang << '\n';
+        std::cout << "Kode_Barang: " << kode_barang << '\n';
+        std::cout << "Jumlah_Barang: " << jumlah_barang << "\n\n";
+        std::cout << "Harga_Barang: " << harga_barang << "\n\n";
     }
     in.close();
 
     // Input kode menu dan jumlah pesanan
-    cout << endl;
-    cout << "Masukkan kode barang: ";
-    cin >> kode;
-    cout << "Masukkan jumlah pesanan: ";
-    cin >> jumlah;
+    std::cout << std::endl;
+    std::cout << "Masukkan kode barang: ";
+    std::cin >> kode;
+    std::cout << "Masukkan jumlah pesanan: ";
+    int jumlah;
+    std::cin >> jumlah;
+
     if (jumlah <= 0 || jumlah > 20) {
-        cout << "Jumlah pesanan tidak valid" << endl;
-        return 0; // loop program jika jumlah pesanan kurang dari atau sama dengan 0
-    }
-    if (jumlah > std::stoi(jumlah_barang)) {
-        cout << "Stok barang tidak mencukupi" << endl;
-        return 0; // loop program jika jumlah pesanan lebih dari stok barang
+        std::cout << "Jumlah pesanan tidak valid" << std::endl;
+        return 0; 
     }
 
-    ifstream file("barang.txt");
+    std::ifstream file("barang.txt");
     bool found = false;
     while (std::getline(file, nama_barang) && std::getline(file, kode_barang) && std::getline(file, jumlah_barang) && std::getline(file, harga_barang)) {
         if (kode == kode_barang) {
@@ -60,49 +54,49 @@ int main() {
     file.close();
 
     if (!found) {
-        cout << "Barang tidak ada / kode barang tidak valid!" << endl;
+        std::cout << "Barang tidak ada / kode barang tidak valid!" << std::endl;
         return 0;
     }
 
-    void *ptr = &harga_barang; // pointer ke harga_barang
-
     // menghitung total belanja
-    total = std::stoi(harga_barang) * jumlah;
-    cout << "Total belanja: Rp. " << total << endl;
+    int total = std::stoi(harga_barang) * jumlah;
+    std::cout << "Total belanja: Rp. " << total << std::endl;
 
     // uang yang dibayarkan
-    cout << "Masukkan jumlah uang yang dibayarkan: Rp. ";
-    cin >> jumbayar;
+    std::cout << "Masukkan jumlah uang yang dibayarkan: Rp. ";
+    int jumbayar;
+    std::cin >> jumbayar;
     if (jumbayar < total) {
-        cout << "Uangmu kurang kocak" << endl;
-        return 0; // loop program jika uang yang dibayarkan kurang dari total belanja
+        std::cout << "Uang yang dibayarkan kurang!" << std::endl; 
     }
 
     // menghitung kembalian
-    kembalian = jumbayar - total;
-    cout << "Kembalian: Rp. " << kembalian << endl;
+    double kembalian = jumbayar - total;
+    std::cout << "Kembalian: Rp. " << kembalian << std::endl;
+    int kembalian_rupiah = static_cast<int>(kembalian);
 
     // menampilkan struk pembayaran
-    cout << endl;
-    cout << "======================================================================" << endl;
-    cout << "                          STRUK PEMBAYARAN                             " << endl;
-    cout << "======================================================================" << endl;
-    cout << "Nama pembeli : " << pembeli << endl;
-    cout << "Nama barang  : " << nama_barang << endl;
-    cout << "Kode barang  : " << kode << endl;
-    cout << "Harga        : Rp. " << harga_barang << endl;
-    cout << "Jumlah       : " << jumlah << endl;
-    cout << "Total        : Rp. " << total << endl;
-    cout << "Uang bayar   : Rp. " << jumbayar << endl;
-    cout << "Kembalian    : Rp. " << kembalian << endl;
-    cout << "======================================================================" << endl;
-    cout << "Terima kasih telah berbelanja HIHUUU" << endl;
-    cout << "======================================================================" << endl;
+    std::cout << std::endl;
+    std::cout << "======================================================================" << std::endl;
+    std::cout << "                          STRUK PEMBAYARAN                             " << std::endl;
+    std::cout << "======================================================================" << std::endl;
+    std::cout << "Nama pembeli : " << pembeli << std::endl;
+    std::cout << "Nama barang  : " << nama_barang << std::endl;
+    std::cout << "Kode barang  : " << kode << std::endl;
+    std::cout << "Harga        : Rp. " << harga_barang << std::endl;
+    std::cout << "Jumlah       : " << jumlah << std::endl;
+    std::cout << "Total        : Rp. " << total << std::endl;
+    std::cout << "Uang bayar   : Rp. " << jumbayar << std::endl;
+    std::cout << "Kembalian    : Rp. " << kembalian << std::endl;
+    std::cout << "======================================================================" << std::endl;
+    std::cout << "Terima kasih telah berbelanja di UMSAMART" << std::endl;
+    std::cout << "======================================================================" << std::endl;
 
     // apakah ingin melakukan transaksi lagi
-    cout << "Apakah Anda ingin melakukan transaksi lagi? (y/Y): ";
-    cin >> input;
+    std::cout << "Apakah Anda ingin melakukan transaksi lagi? (y/n): ";
+    std::cin >> input;
     if (input == "y" || input == "Y") {
         main(); // memanggil fungsi main() untuk melakukan transaksi lagi
     }
+    return 0;
 }
